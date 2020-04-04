@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace kubiaaspnet
 {
@@ -19,7 +20,7 @@ namespace kubiaaspnet
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
         {
             if (env.IsDevelopment())
             {
@@ -32,7 +33,8 @@ namespace kubiaaspnet
             {
                 endpoints.MapGet("/", async context =>
                 {
-                    await context.Response.WriteAsync("Hello World!");
+                    logger.LogInformation($"Received request from {context.Connection.RemoteIpAddress}");
+                    await context.Response.WriteAsync($"You've hit {Environment.MachineName}");
                 });
             });
         }
