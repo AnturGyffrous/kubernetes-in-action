@@ -34,7 +34,7 @@ namespace kubiaaspnet
                 endpoints.MapGet("/", async context =>
                 {
                     logger.LogInformation($"Received request from {context.Connection.RemoteIpAddress}");
-                    await context.Response.WriteAsync($"You've hit {Environment.MachineName}");
+                    await context.Response.WriteAsync($"You've hit {Environment.MachineName}\n");
                 });
             });
         }
