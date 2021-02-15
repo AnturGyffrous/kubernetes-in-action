@@ -23,20 +23,10 @@ namespace kubiaaspnet
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
         {
-            if (env.IsDevelopment())
+            app.Run(async context =>
             {
-                app.UseDeveloperExceptionPage();
-            }
-
-            app.UseRouting();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapGet("/", async context =>
-                {
-                    logger.LogInformation($"Received request for {context.Request.GetDisplayUrl()} from {context.Connection.RemoteIpAddress}");
-                    await context.Response.WriteAsync($"Hey there, this is {Environment.MachineName}. Your IP is {context.Connection.RemoteIpAddress}.\n");
-                });
+                logger.LogInformation($"Received request for {context.Request.GetDisplayUrl()} from {context.Connection.RemoteIpAddress}");
+                await context.Response.WriteAsync($"Hey there, this is {Environment.MachineName}. Your IP is {context.Connection.RemoteIpAddress}.\n");
             });
         }
     }
